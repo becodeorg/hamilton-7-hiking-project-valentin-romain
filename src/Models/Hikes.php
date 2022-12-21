@@ -42,7 +42,7 @@ class Hikes extends Database
         }
     }
 
-    public function update(string $id, string $name, float $distance, float $duration, float $elevation_gain, string $description, string $updated_at):void {
+    public function update(string $name, float $distance, float $duration, float $elevation_gain, string $description, string $updated_at, int $id):void {
         if (!$this->query(
             "UPDATE hikes SET name = ?, duration = ?, distance = ?, elevation_gain = ?, description = ?, updated_at = ? WHERE id = ?",
             [

@@ -47,7 +47,48 @@ class HikesController
             $elevation = htmlspecialchars($input['hikeElevation']);
             $description = htmlspecialchars($input['hikeDescription']);
 
-            $this->hikesModel->create($hikeName, $hikeDate, $distance, $duration, $elevation, $description);
+            $this->hikesModel->create($hikeName, $hikeDate, $duration, $distance, $elevation, $description);
+
+            $id = $this->hikesModel->getLastInsertId();
+
+            http_response_code(302);
+            header('location: /hike?id='.$id);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            echo "<br><a href='/'>Get back home</a>";
+        }
+    }
+
+    public function editHike(string $id): void {
+        $hike = $this->hikesModel->find($id);
+        if (empty($_SESSION['user'])) {
+            include 'View/includes/header.view.php';
+            echo "<div class='w-[50%] text-center'>";
+            echo "You must be <a href='login?id=". $id ."'>logged in</a> to see this !<br>Get back <a href='/'>home</a>.";
+            throw new Exception ("You must be logged in to see this page.");
+
+        }
+        include 'View/includes/header.view.php';
+        include 'View/editHike.view.php';
+        include 'View/includes/footer.view.php';
+    }
+
+    public function updateHike(array $input):void
+    {
+        try {
+            if (empty($input['hikeName']) || empty($input['hikeDistance']) || empty($input['hikeDuration']) || empty($input['hikeElevation']) || empty($input['hikeDescription'])) {
+                throw new Exception('Form data not validated.');
+            }
+            $hikeName = htmlspecialchars($input['hikeName']);
+            $distance = htmlspecialchars($input['hikeDistance']);
+            $duration = htmlspecialchars($input['hikeDuration']);
+            $elevation = htmlspecialchars($input['hikeElevation']);
+            $description = htmlspecialchars($input['hikeDescription']);
+            $updatedAt = date("Y-m-d H:i:s");
+            $id = $_GET['id'];
+
+
+            $this->hikesModel->update($hikeName, $distance, $duration, $elevation, $description, $updatedAt, $id);
 
             http_response_code(302);
             header('location: /');
