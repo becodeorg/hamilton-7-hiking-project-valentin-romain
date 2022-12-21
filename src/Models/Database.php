@@ -26,7 +26,7 @@ abstract class Database
     }
 
 
-    public function getLastInsertId():void{
-        $this->pdo->lastInsertId();
+    public function getLastInsertId():string{
+        return $this->pdo->lastInsertId();
     }
 }
