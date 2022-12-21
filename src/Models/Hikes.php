@@ -38,6 +38,23 @@ class Hikes extends Database
                 $description,
             ]
         )) {
+            throw new Exception('Error during creation.');
+        }
+    }
+
+    public function update(string $id, string $name, float $distance, float $duration, float $elevation_gain, string $description, string $updated_at):void {
+        if (!$this->query(
+            "UPDATE hikes SET name = ?, duration = ?, distance = ?, elevation_gain = ?, description = ?, updated_at = ? WHERE id = ?",
+            [
+                $name,
+                $duration,
+                $distance,
+                $elevation_gain,
+                $description,
+                $updated_at,
+                $id
+            ]
+        )) {
             throw new Exception('Error during registration.');
         }
     }
