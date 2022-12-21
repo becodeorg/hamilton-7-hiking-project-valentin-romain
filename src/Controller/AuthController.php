@@ -24,10 +24,12 @@ class AuthController
             $id = $this->authModel->getLastInsertId();
 
             $_SESSION['user'] = [
-                'id' => $id,
+                "id" => $id,
                 'username' => $nickName,
+                'firstname' => $firstName,
+                'lastname' => $lastName,
                 'email' => $email,
-                'is_admin' => false
+                'admin' => false
             ];
 
             http_response_code(302);
@@ -66,6 +68,8 @@ class AuthController
             $_SESSION['user'] = [
                 "id" => $user['id'],
                 'username' => $user['nick_name'],
+                'firstname' => $user['first_name'],
+                'lastname' => $user['last_name'],
                 'email' => $user['email'],
                 'admin' => $user['is_admin']
             ];
