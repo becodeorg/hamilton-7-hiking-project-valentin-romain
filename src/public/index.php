@@ -50,6 +50,15 @@ switch($url) {
         if ($server == 'POST') {
             $hikesController->createNewHike($_POST);
         }
+        break;
+    case 'edithike':
+        $hikesController = new HikesController();
+        if($server == 'GET') {
+            $hikesController->editHike($_GET['id']);
+        }
+        if($server == 'POST') {
+            $hikesController->updateHike($_POST);
+        }
     case 'debug':
         include 'View/includes/header.view.php';
         include 'View/temp.view.php';
