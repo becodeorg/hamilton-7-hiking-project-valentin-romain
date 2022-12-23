@@ -31,8 +31,10 @@ switch($url) {
         break;
     case 'hike':
         $hikesController = new HikesController();
+        $tagsController = new TagsController();
         if($server == 'GET') {
             $hikesController->show($_GET['id']);
+            $tagsController->listAllTags($_GET['id']);
         }
         if($server == 'POST') {
             $hikesController->deleteHike($_GET['id']);
@@ -59,6 +61,19 @@ switch($url) {
         if($server == 'POST') {
             $hikesController->updateHike($_POST);
         }
+        break;
+    case 'profile':
+        $usersController = new UsersController();
+        if($server == 'GET' AND empty($_GET)) {
+             $usersController->showOwnProfile();
+        }
+        if($server = 'GET' AND !empty($_GET) AND $_GET['edit'] == "") {
+            $usersController->showEditOwnProfile();
+        }
+        if($server = 'POST' AND !empty($_GET) AND  $_GET['edit'] == "ok") {
+            $usersController->sendEditOwnProfile($_POST);
+        }
+        break;
     case 'debug':
         include 'View/includes/header.view.php';
         include 'View/temp.view.php';
