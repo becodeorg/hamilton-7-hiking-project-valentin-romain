@@ -9,7 +9,7 @@ $server = $_SERVER['REQUEST_METHOD'];
 switch($url) {
     case '':
         $hikesController = new HikesController();
-        $hikesController->index();
+        $hikesController->index($_GET['tag'], $_GET['by']);
         break;
     case 'login':
         $login = new AuthController();
@@ -31,10 +31,8 @@ switch($url) {
         break;
     case 'hike':
         $hikesController = new HikesController();
-        $tagsController = new TagsController();
         if($server == 'GET') {
             $hikesController->show($_GET['id']);
-            $tagsController->listAllTags($_GET['id']);
         }
         if($server == 'POST') {
             $hikesController->deleteHike($_GET['id']);
