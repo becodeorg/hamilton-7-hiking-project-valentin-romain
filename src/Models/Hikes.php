@@ -14,7 +14,7 @@ class Hikes extends Database
     public function find(string $id):array|false {
         try {
             return $this->query(
-                "SELECT name, creation_date, distance, duration, elevation_gain, description, updated_at FROM hikes WHERE id = ?",
+                "SELECT h.name, h.creation_date, h.distance, h.duration, h.elevation_gain, h.description, h.updated_at, h.created_by FROM hikes h WHERE h.id = ?",
                 [
                     $id
                 ]
@@ -26,9 +26,9 @@ class Hikes extends Database
         }
     }
 
-    public function create(string $name, string $creation_date, float $distance, float $duration, float $elevation_gain, string $description):void {
+    public function create(string $name, string $creation_date, float $distance, float $duration, float $elevation_gain, string $description, int $userid):void {
         if (!$this->query(
-            "INSERT INTO hikes(name, creation_date, distance, duration, elevation_gain, description) VALUES (?, ?, ?, ?, ?, ?)",
+            "INSERT INTO hikes(name, creation_date, distance, duration, elevation_gain, description, created_by) VALUES (?, ?, ?, ?, ?, ?, (SELECT nick_name FROM users WHERE id = ?))",
             [
                 $name,
                 $creation_date,
@@ -36,6 +36,7 @@ class Hikes extends Database
                 $distance,
                 $elevation_gain,
                 $description,
+                $userid
             ]
         )) {
             throw new Exception('Error during creation.');
@@ -55,7 +56,7 @@ class Hikes extends Database
                 $id
             ]
         )) {
-            throw new Exception('Error during registration.');
+            throw new Exception('Error during edition.');
         }
     }
 

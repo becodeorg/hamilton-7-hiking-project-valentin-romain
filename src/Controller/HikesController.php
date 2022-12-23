@@ -10,6 +10,7 @@ class HikesController
     public function index(): void {
         $hikes = $this->hikesModel->findAll();
         include 'View/includes/header.view.php';
+        include 'View/includes/navbar.view.php';
         include 'View/ListHikes.php';
         include 'View/includes/footer.view.php';
     }
@@ -24,12 +25,14 @@ class HikesController
 
         }
         include 'View/includes/header.view.php';
+        include 'View/includes/navbar.view.php';
         include 'View/SingleHikes.php';
         include 'View/includes/footer.view.php';
     }
 
-    public function showNewHike() {
+    public function showNewHike(): void {
         include 'View/includes/header.view.php';
+        include 'View/includes/navbar.view.php';
         include 'View/newHike.view.php';
         include 'View/includes/footer.view.php';
     }
@@ -46,8 +49,9 @@ class HikesController
             $duration = htmlspecialchars($input['hikeDuration']);
             $elevation = htmlspecialchars($input['hikeElevation']);
             $description = htmlspecialchars($input['hikeDescription']);
+            $userid = $_SESSION['user']['id'];
 
-            $this->hikesModel->create($hikeName, $hikeDate, $duration, $distance, $elevation, $description);
+            $this->hikesModel->create($hikeName, $hikeDate, $duration, $distance, $elevation, $description, $userid);
 
             $id = $this->hikesModel->getLastInsertId();
 
@@ -69,6 +73,7 @@ class HikesController
 
         }
         include 'View/includes/header.view.php';
+        include 'View/includes/navbar.view.php';
         include 'View/editHike.view.php';
         include 'View/includes/footer.view.php';
     }

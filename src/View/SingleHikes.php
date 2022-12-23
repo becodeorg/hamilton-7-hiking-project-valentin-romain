@@ -2,12 +2,16 @@
     <form method="post">
         <button type="submit" onclick="return confirm('This will completely remove this hike from the database, and cannot be undone. Are you sure you want to do this ?')" class="absolute top-8 right-[37%]">X</button>
     </form>
-    <p class="absolute top-8 left-[36%] italic"><?=$hike['creation_date']?></p>
+    <p class="absolute top-8 left-[36%] italic"><?=$hike['creation_date']?> by <?=$hike['created_by']?></p>
     <?php if(!empty($hike['updated_at'])) {
         echo '<p class="absolute top-12 left-[36%] italic">Last edit: '. $hike['updated_at'] . '</p>';
     }
     ?>
     <h1 class="text-3xl text-center mt-5"><?=$hike['name']?> (<?=$hike['distance']?>km)</h1>
+    <?= var_dump($tags) ?>
+    <?php foreach ($tags as $tag) : ?>
+        <p><?=$tag['id_tags']?></p>
+    <?php endforeach; ?>
     <h2 class="text-xl">Average duration: <?=intdiv($hike['duration'], 60).'h'. ($hike['duration'] % 60)?></h2>
     <h3 class="text-l">Elevation: <?=$hike['elevation_gain']?>m</h3>
     <p class="italic"><?=$hike['description']?></p>
