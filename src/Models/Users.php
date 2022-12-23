@@ -27,18 +27,19 @@ class Users extends Database
             return [];
         }
     }
-    public function findOwn():array|false
-    {
-        try {
-            return $this->query(
-                "SELECT * FROM users WHERE id = ?",
-                [
-                    $_SESSION['user']['id']
-                ]
-            )->fetch();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            return [];
+    public function update(string $firstname, string $lastname, string $username, string $email, int $id): void {
+        if (!$this->query(
+            "UPDATE users SET first_name = ?, last_name = ?, nick_name = ?, email = ? WHERE id = ?",
+            [
+                $firstname,
+                $lastname,
+                $username,
+                $email,
+                $id
+            ]
+        ))
+        {
+            throw new Exception('Error during registration.');
         }
     }
 }

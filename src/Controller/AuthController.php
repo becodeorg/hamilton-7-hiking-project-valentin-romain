@@ -44,6 +44,7 @@ class AuthController
     public function showRegistrationForm(): void
     {
         include 'View/includes/header.view.php';
+        include 'View/includes/navbar.view.php';
         include 'View/Sub.php';
         include 'View/includes/footer.view.php';
     }
@@ -91,6 +92,7 @@ class AuthController
     public function showLoginForm():void
     {
         include 'View/includes/header.view.php';
+        include 'View/includes/navbar.view.php';
         include 'View/Login.php';
         include 'View/includes/footer.view.php';
     }
